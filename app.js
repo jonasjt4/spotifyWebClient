@@ -1,18 +1,29 @@
 ```javascript
-/*
-    Minimal Spotify Remote
-    ----------------------
+// ==========================================
+// SPOTIFY CONFIG
+// ==========================================
 
-    This is the frontend controller.
+const CLIENT_ID = "4b1b166a0db94530923fa6e20f38d3ba";
 
-    Spotify API authentication and playback
-    functions will be connected here.
-*/
+const REDIRECT_URI =
+    "https://jonasjt4.github.io/spotifyWebClient/";
 
 
-// -----------------------------------------
-// Elements
-// -----------------------------------------
+// ==========================================
+// SPOTIFY PERMISSIONS
+// ==========================================
+
+const SCOPES = [
+    "user-read-playback-state",
+    "user-modify-playback-state",
+    "user-read-currently-playing",
+    "user-read-private"
+].join(" ");
+
+
+// ==========================================
+// ELEMENTS
+// ==========================================
 
 const loginBtn = document.getElementById("loginBtn");
 
@@ -26,6 +37,7 @@ const songTitle = document.getElementById("songTitle");
 const artistName = document.getElementById("artistName");
 
 const progress = document.getElementById("progress");
+
 const currentTime = document.getElementById("currentTime");
 const duration = document.getElementById("duration");
 
@@ -35,189 +47,82 @@ const deviceName = document.getElementById("deviceName");
 const status = document.getElementById("status");
 
 
-// -----------------------------------------
-// Login
-// -----------------------------------------
+// ==========================================
+// PKCE
+// ==========================================
 
-loginBtn.addEventListener("click", () => {
+function generateRandomString(length) {
 
-    /*
-        Spotify authentication will go here.
+    const characters =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-        Later this will use Spotify OAuth + PKCE.
-    */
+    let result = "";
 
-    alert(
-        "Spotify login will be connected here."
+    for (let i = 0; i < length; i++) {
+        result += characters.charAt(
+            Math.floor(Math.random() * characters.length)
+        );
+    }
+
+    return result;
+}
+
+
+async function sha256(plain) {
+
+    const encoder = new TextEncoder();
+
+    const data = encoder.encode(plain);
+
+    return window.crypto.subtle.digest(
+        "SHA-256",
+        data
+    );
+}
+
+
+function base64urlencode(input) {
+
+    return btoa(
+        String.fromCharCode(...new Uint8Array(input))
+    )
+        .replace(/\+/g, "-")
+        .replace(/\//g, "_")
+        .replace(/=+$/, "");
+}
+
+
+// ==========================================
+// LOGIN
+// ==========================================
+
+loginBtn.addEventListener("click", async () => {
+
+    const verifier =
+        generateRandomString(128);
+
+    const hashed =
+        await sha256(verifier);
+
+    const challenge =
+        base64urlencode(hashed);
+
+
+    localStorage.setItem(
+        "spotify_verifier",
+        verifier
     );
 
-});
 
+    const params = new URLSearchParams({
 
-// -----------------------------------------
-// Play / Pause
-// -----------------------------------------
+        client_id: CLIENT_ID,
 
-playBtn.addEventListener("click", async () => {
+        response_type: "code",
 
-    /*
-        Later:
+        redirect_uri: REDIRECT_URI,
 
-        If Spotify is playing:
-            pauseSpotify();
+        scope: SCOPES,
 
-        Otherwise:
-            playSpotify();
-    */
-
-    console.log("Play / pause");
-
-});
-
-
-// -----------------------------------------
-// Previous
-// -----------------------------------------
-
-previousBtn.addEventListener("click", async () => {
-
-    console.log("Previous track");
-
-});
-
-
-// -----------------------------------------
-// Next
-// -----------------------------------------
-
-nextBtn.addEventListener("click", async () => {
-
-    console.log("Next track");
-
-});
-
-
-// -----------------------------------------
-// Volume
-// -----------------------------------------
-
-volume.addEventListener("input", async () => {
-
-    const value = volume.value;
-
-    console.log("Volume:", value);
-
-    /*
-        Later:
-
-        Spotify API:
-        PUT /me/player/volume
-
-        volume_percent = value
-    */
-
-});
-
-
-// -----------------------------------------
-// Progress bar
-// -----------------------------------------
-
-progress.addEventListener("input", () => {
-
-    const value = progress.value;
-
-    console.log("Seek:", value);
-
-    /*
-        Later this will send:
-
-        PUT /me/player/seek
-
-        position_ms = ...
-    */
-
-});
-
-
-// -----------------------------------------
-// Keyboard controls
-// -----------------------------------------
-
-document.addEventListener("keydown", (event) => {
-
-    // Space = play/pause
-    if (event.code === "Space") {
-
-        event.preventDefault();
-
-        playBtn.click();
-    }
-
-
-    // Left arrow = previous
-    if (event.code === "ArrowLeft") {
-
-        previousBtn.click();
-    }
-
-
-    // Right arrow = next
-    if (event.code === "ArrowRight") {
-
-        nextBtn.click();
-    }
-
-});
-
-
-// -----------------------------------------
-// Helpers
-// -----------------------------------------
-
-function formatTime(milliseconds) {
-
-    const totalSeconds =
-        Math.floor(milliseconds / 1000);
-
-    const minutes =
-        Math.floor(totalSeconds / 60);
-
-    const seconds =
-        totalSeconds % 60;
-
-    return `${minutes}:${seconds
-        .toString()
-        .padStart(2, "0")}`;
-}
-
-
-// -----------------------------------------
-// Demo data
-// -----------------------------------------
-
-function demoSong() {
-
-    songTitle.textContent = "Nothing playing";
-
-    artistName.textContent =
-        "Connect Spotify to begin";
-
-    currentTime.textContent = "0:00";
-
-    duration.textContent = "0:00";
-
-    progress.value = 0;
-
-    deviceName.textContent =
-        "No device connected";
-
-    status.textContent =
-        "Disconnected";
-}
-
-
-// Start
-demoSong();
+        code_challenge_method: "S256"
 ```
-
