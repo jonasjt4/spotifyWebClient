@@ -1,1 +1,125 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minimal Spotify Remote</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <main class="player">
+
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">music</div>
+
+            <button id="loginBtn" class="login-btn">
+                Connect Spotify
+            </button>
+        </header>
+
+
+        <!-- Main player -->
+        <section class="now-playing">
+
+            <div class="album-container">
+                <img
+                    id="albumArt"
+                    src="https://via.placeholder.com/500"
+                    alt="Album artwork"
+                >
+            </div>
+
+            <div class="song-info">
+                <h1 id="songTitle">Nothing playing</h1>
+                <p id="artistName">Connect Spotify to begin</p>
+            </div>
+
+
+            <!-- Progress -->
+            <div class="progress-area">
+
+                <span id="currentTime">0:00</span>
+
+                <input
+                    type="range"
+                    id="progress"
+                    min="0"
+                    max="100"
+                    value="0"
+                >
+
+                <span id="duration">0:00</span>
+
+            </div>
+
+
+            <!-- Controls -->
+            <div class="controls">
+
+                <button id="previousBtn" class="control secondary">
+                    ⏮
+                </button>
+
+                <button id="playBtn" class="control main">
+                    ▶
+                </button>
+
+                <button id="nextBtn" class="control secondary">
+                    ⏭
+                </button>
+
+            </div>
+
+
+            <!-- Volume -->
+            <div class="volume">
+
+                <span>−</span>
+
+                <input
+                    type="range"
+                    id="volume"
+                    min="0"
+                    max="100"
+                    value="70"
+                >
+
+                <span>+</span>
+
+            </div>
+
+
+            <!-- Device -->
+            <div class="device">
+
+                <span class="device-dot"></span>
+
+                <span id="deviceName">
+                    No device connected
+                </span>
+
+            </div>
+
+        </section>
+
+
+        <!-- Bottom bar -->
+        <footer>
+            <span>Minimal Spotify Remote</span>
+            <span id="status">Disconnected</span>
+        </footer>
+
+    </main>
+
+
+    <script src="app.js"></script>
+
+</body>
+</html>
+```
 
