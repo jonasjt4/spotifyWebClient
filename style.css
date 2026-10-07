@@ -1,1 +1,311 @@
+```css
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --background: #0d0d0d;
+    --surface: #151515;
+    --surface-light: #202020;
+    --text: #ffffff;
+    --muted: #777777;
+    --accent: #ffffff;
+}
+
+body {
+    min-height: 100vh;
+
+    background: var(--background);
+    color: var(--text);
+
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* Main */
+
+.player {
+    width: min(500px, 92vw);
+}
+
+
+/* Header */
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 45px;
+}
+
+.logo {
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+}
+
+.login-btn {
+    background: transparent;
+    border: 1px solid #333;
+
+    color: #aaa;
+
+    padding: 9px 15px;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.login-btn:hover {
+    color: white;
+    border-color: #555;
+}
+
+
+/* Album */
+
+.album-container {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+
+    background: var(--surface);
+
+    border-radius: 14px;
+
+    overflow: hidden;
+
+    margin-bottom: 28px;
+}
+
+.album-container img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    display: block;
+}
+
+
+/* Song */
+
+.song-info {
+    margin-bottom: 28px;
+}
+
+.song-info h1 {
+    font-size: 24px;
+    font-weight: 600;
+
+    letter-spacing: -0.8px;
+
+    margin-bottom: 6px;
+}
+
+.song-info p {
+    color: var(--muted);
+
+    font-size: 15px;
+}
+
+
+/* Progress */
+
+.progress-area {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    color: #666;
+
+    font-size: 11px;
+
+    margin-bottom: 25px;
+}
+
+.progress-area input {
+    flex: 1;
+}
+
+
+/* Range sliders */
+
+input[type="range"] {
+    appearance: none;
+
+    height: 3px;
+
+    background: #333;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    appearance: none;
+
+    width: 11px;
+    height: 11px;
+
+    background: white;
+
+    border-radius: 50%;
+
+    cursor: pointer;
+}
+
+
+/* Controls */
+
+.controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    gap: 35px;
+
+    margin-bottom: 30px;
+}
+
+.control {
+    border: none;
+
+    background: transparent;
+
+    color: white;
+
+    cursor: pointer;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    transition: transform 0.15s, opacity 0.15s;
+}
+
+.control:hover {
+    transform: scale(1.1);
+}
+
+.control:active {
+    transform: scale(0.95);
+}
+
+.control.secondary {
+    font-size: 20px;
+
+    opacity: 0.7;
+}
+
+.control.main {
+    width: 58px;
+    height: 58px;
+
+    background: white;
+
+    color: black;
+
+    border-radius: 50%;
+
+    font-size: 18px;
+}
+
+
+/* Volume */
+
+.volume {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    width: 180px;
+
+    margin: 0 auto 35px;
+
+    color: #555;
+
+    font-size: 14px;
+}
+
+.volume input {
+    flex: 1;
+}
+
+
+/* Device */
+
+.device {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    gap: 8px;
+
+    color: #666;
+
+    font-size: 12px;
+}
+
+.device-dot {
+    width: 6px;
+    height: 6px;
+
+    background: #555;
+
+    border-radius: 50%;
+}
+
+
+/* Footer */
+
+footer {
+    display: flex;
+    justify-content: space-between;
+
+    margin-top: 60px;
+
+    color: #444;
+
+    font-size: 11px;
+}
+
+
+/* Mobile */
+
+@media (max-width: 600px) {
+
+    .player {
+        width: 90vw;
+    }
+
+    .header {
+        margin-bottom: 30px;
+    }
+
+    .album-container {
+        border-radius: 10px;
+    }
+
+    .song-info h1 {
+        font-size: 21px;
+    }
+
+}
+```
 
